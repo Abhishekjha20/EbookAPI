@@ -48,3 +48,11 @@
 --> npm i -D http-errors
 
 ------------SETUP COMPLETED---------------------
+
+# install bcrypt
+--> password saved in hash
+--> npm i -D @types/bcrypt
+
+# Tokens Genereation
+--> npm i jsonwebtoken
+--> npm i -D @types/jsonwebtoken
