@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import { config } from "../config/config";
 import { User } from "./userTypes";
 
-// Create User endpoint start_________________________________________________________________
+// Register(Signup) User endpoint_________________________________________________________________
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
     const { name, email, password } = req.body;
@@ -60,11 +60,10 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
         return next(createHttpError(500, "Error while signing the jwt token"))
     }
 };
+// _______________________________________________________________________________________________
 
-// Create  point End_________________________________________________________________________________
 
-
-// Login endpoint start___________________________________________________________________
+// Login endpoint start___________________________________________________________________________
 
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
@@ -99,8 +98,11 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     } catch (err) {
         return next(createHttpError(500, "error while getting user"))
     }
-}
+};
+// _______________________________________________________________________________________________
 
-// Login endpoint end__________________________________________________________________
+
+
+
 
 export { createUser, loginUser };

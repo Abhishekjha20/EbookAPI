@@ -56,3 +56,10 @@
 # Tokens Genereation
 --> npm i jsonwebtoken
 --> npm i -D @types/jsonwebtoken
+
+
+# Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files. It is written on top of busboy for maximum efficiency.
+--> npm i multer
+--> npm i -D @types/multer
+
+
