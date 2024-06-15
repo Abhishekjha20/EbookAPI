@@ -62,4 +62,8 @@
 --> npm i multer
 --> npm i -D @types/multer
 
+# install Cloudnary for image
+--> npm i cloudinary
+--> inbuild types
+
 
