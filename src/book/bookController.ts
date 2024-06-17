@@ -5,7 +5,7 @@ import createHttpError from "http-errors";
 
 const createBook = async (req: Request, res: Response, next: NextFunction) => {
     // const {} = req.body
-    console.log("files", req.files);
+    // console.log("files", req.files);
 
     try {
         const files = req.files as { [fieldname: string]: Express.Multer.File[] };
@@ -20,8 +20,15 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
             filename_override: __filename,
             folder: 'book-covers',
             format: coverImageMimeType,
-
         })
+
+        const bookFileName = files.file[0].filename;
+        const bookFilePath = path.resolve(
+            __dirname,
+            "../../public/data/uploads",
+            bookFileName
+        )
+
         console.log("Uploads result", uploadResult)
 
     } catch (err) {
