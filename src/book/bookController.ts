@@ -29,14 +29,24 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
             bookFileName
         )
 
-        console.log("Uploads result", uploadResult)
+        const bookFileUploadResult = await cloudinary.uploader.upload(bookFilePath, {
+            resource_type: 'raw',
+            filename_override: bookFileName,
+            folder: 'book-pdfs',
+            format: "pdf"
+
+        });
+
+        console.log("file Uploads result", uploadResult);
+        console.log("Book file upload result", bookFileUploadResult);
+
+        res.json({});
 
     } catch (err) {
         return next(createHttpError(500, "Error while getting image and files"));
     }
 
 
-    res.json({});
 
 };
 
