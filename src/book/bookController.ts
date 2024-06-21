@@ -159,7 +159,7 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
 
         res.json(updateBook);
 
-    } catch {
+    } catch (err) {
         return next(createHttpError(500, "Error while updating profile"))
     }
 }
@@ -168,14 +168,37 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
 
 const listBooks = async (req: Request, res: Response, next: NextFunction) => {
     try {
-
         //  add pagination___
         const book = await bookModel.find();
         res.json(book);
 
-    } catch {
+    } catch (err) {
         return next(createHttpError(500, "Error while getting list"))
     }
 }
 
-export { createBook, updateBook, listBooks };
+//_____________________Get single book______________________________________________
+
+const getSingleBook = async (req: Request, res: Response, next: NextFunction) => {
+
+    const bookId = req.params.bookId;
+    try {
+        const book = await bookModel.findOne({
+            _id: bookId
+        })
+
+        if (!book) {
+            return next(createHttpError(404, "book not found"))
+        }
+
+        return res.json(book)
+
+    } catch (err) {
+        return next(createHttpError(500, "Error while getting single book"))
+    }
+}
+
+
+
+
+export { createBook, updateBook, listBooks, getSingleBook };
