@@ -226,7 +226,7 @@ const bookDelete = async (req: Request, res: Response, next: NextFunction) => {
         const coverImagePublicId = coverFileSplits.at(-2) + '/' + (coverFileSplits.at(-1)?.split('.').at(-2));
 
         //  console.log("coverFileSplits", coverFileSplits)
-        console.log("coverImagePublicId ", coverImagePublicId);
+        // console.log("coverImagePublicId ", coverImagePublicId);
 
         const booFileSplits = book.file.split('/');
         const bookFilePublicId = booFileSplits.at(-2) + '/' + booFileSplits.at(-1);
