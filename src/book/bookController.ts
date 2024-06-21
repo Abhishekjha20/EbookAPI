@@ -6,6 +6,8 @@ import bookModel from "./bookModel";
 import fs from 'node:fs';
 import { AuthRequest } from "../middlewares/authenticate";
 
+//_____________________Create Book_____________________________________
+
 const createBook = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
@@ -64,7 +66,7 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
         res.status(201).json({ id: newBook._id })
 
     } catch (err) {
-        return next(createHttpError(500, "Error while getting image and files"));
+        return next(createHttpError(500, "Error while creating image and files"));
     }
 
 
@@ -162,4 +164,18 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export { createBook, updateBook };
+// _______________________List_____________________________________________
+
+const listBooks = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
+        //  add pagination___
+        const book = await bookModel.find();
+        res.json(book);
+
+    } catch {
+        return next(createHttpError(500, "Error while getting list"))
+    }
+}
+
+export { createBook, updateBook, listBooks };
