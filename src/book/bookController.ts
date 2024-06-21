@@ -133,7 +133,7 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
             const uploadResultPdf = await cloudinary.uploader.upload(bookFilePath, {
                 resource_type: "raw",
                 filename_override: completeFileName,
-                folder: "books-covers",
+                folder: "books-pdfs",
                 format: "pdf",
             });
 
@@ -198,7 +198,58 @@ const getSingleBook = async (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
+// _________________________Delete__________________________________________________
+
+const bookDelete = async (req: Request, res: Response, next: NextFunction) => {
+
+    const bookId = req.params.bookId;
+
+    try {
+        const book = await bookModel.findOne({
+            _id: bookId,
+        })
+
+        if (!book) {
+            return next(createHttpError(404, "Book not found"))
+        }
+
+        // check access___
+        const _req = req as AuthRequest;
+        if (book.author.toString() != _req.userId) {
+            return next(createHttpError(403, "You cannot delete the book"))
+        }
+
+        //book-covers/cfwtl1ezvwtx9hn8wiu5
+
+        const coverFileSplits = book.coverImage.split('/');
+
+        const coverImagePublicId = coverFileSplits.at(-2) + '/' + (coverFileSplits.at(-1)?.split('.').at(-2));
+
+        //  console.log("coverFileSplits", coverFileSplits)
+        console.log("coverImagePublicId ", coverImagePublicId);
+
+        const booFileSplits = book.file.split('/');
+        const bookFilePublicId = booFileSplits.at(-2) + '/' + booFileSplits.at(-1);
+
+        // console.log("bookFilePublicId", bookFilePublicId)
+
+        await cloudinary.uploader.destroy(coverImagePublicId);
+        await cloudinary.uploader.destroy(bookFilePublicId, {
+            resource_type: "raw"
+        });
+
+        // record delete for db_
+
+        await bookModel.deleteOne({ _id: bookId })
+
+        return res.sendStatus(204);
+
+    } catch (err) {
+        return next(createHttpError(500, "Error while Deleting book"))
+    }
+}
 
 
 
-export { createBook, updateBook, listBooks, getSingleBook };
+
+export { createBook, updateBook, listBooks, getSingleBook, bookDelete };
