@@ -164,7 +164,7 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-// _______________________List_____________________________________________
+// ______________________Get Book List_____________________________________________
 
 const listBooks = async (req: Request, res: Response, next: NextFunction) => {
     try {
