@@ -66,4 +66,7 @@
 --> npm i cloudinary
 --> inbuild types
 
+# CORS 
+--> npm i cors
+--> npm i -D @types/cors
 
